@@ -15,18 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => '/book/api'/*, 'middleware'=>'auth'*/], function () {
-    Route::post('/add', [BookController::class, 'addBook']);
-    Route::post('/makeFavorite', [UserBooksController::class, 'makeFavorite']);
-    Route::get('/search', [BookController::class, 'search']);
-    Route::get('/show', [UserBooksController::class, 'showBookList']);
-    Route::get('/getInfo', [UserBooksController::class, 'getInfo']);
-    Route::get('/deleteBook', [UserBooksController::class, 'deleteBook']);
-});
-
-Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => '/books '/*, 'middleware'=>'auth'*/], function () {
-    Route::get('/show', [UserBooksController::class, 'showBookList']);
-});
-
 require __DIR__ . '/auth.php';

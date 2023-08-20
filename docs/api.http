@@ -1,0 +1,66 @@
+###
+POST http://127.0.0.1:8000/api/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "sasha6",
+    "email": "sasha6@admin.com",
+    "password": "adminadmin",
+    "confirmPassword": "adminadmin"
+}
+
+###
+POST http://127.0.0.1:8000/api/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "login": "admin",
+    "password": "adminadmin"
+}
+
+###
+GET http://127.0.0.1:8000/api/book/search?query=игра
+Authorization: Bearer 123
+USER_ID: 1
+Accept: application/json
+
+###
+POST http://127.0.0.1:8000/api/book/add
+Authorization: Bearer 123
+USER_ID: 1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "uid": "K-fGCQAAQBAJ"
+}
+
+<> 2023-08-20T162211.500.json
+
+
+###
+GET http://127.0.0.1:8000/api/book/show
+Authorization: Bearer 46f5a98a-191c-4a46-9f1b-a4936ccba691
+USER_ID: 9
+Accept: application/json
+
+###
+POST http://127.0.0.1:8000/api/book/makeFavorite/3
+Authorization: Bearer 46f5a98a-191c-4a46-9f1b-a4936ccba691
+USER_ID: 9
+Accept: application/json
+
+
+###
+GET http://127.0.0.1:8000/api/book/getInfo/3
+Authorization: Bearer 46f5a98a-191c-4a46-9f1b-a4936ccba691
+USER_ID: 9
+Accept: application/json
+
+###
+GET http://127.0.0.1:8000/api/book/deleteBook/3
+Authorization: Bearer 46f5a98a-191c-4a46-9f1b-a4936ccba691
+USER_ID: 9
+Accept: application/json

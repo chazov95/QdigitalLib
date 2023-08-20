@@ -54,6 +54,8 @@ class BookController extends Controller
         $book = $this->addBookToBookTable($request->get("uid"));
 
         $this->addBookToUserBookTable($book);
+
+        return new JsonResponse();
     }
 
     public function addBookToBookTable($uid)
