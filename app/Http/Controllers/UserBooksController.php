@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserBooks;
 use ErrorException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserBooksController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function showBookList(Request $request)
     {
         $user = $this->getUserByToken($request);
-
         $userBooks = DB::table('user_books')
             ->join('books', 'books.id', '=', 'user_books.book_id')
             ->select('books.title', 'books.description', 'books.authors', 'user_books.favorite')
@@ -24,7 +25,13 @@ class UserBooksController extends Controller
         return new JsonResponse($userBooks);
     }
 
-    public function deleteBook(Request $request, $bookId)
+    /**
+     * @param Request $request
+     * @param $bookId
+     * @return JsonResponse
+     * @throws ErrorException
+     */
+    public function deleteBook(Request $request, int $bookId)
     {
         if (false === $this->checkUserHasBook($request, $bookId)) {
             return new JsonResponse(["message" => "книга не принадлежит пользователю"]);
@@ -41,7 +48,7 @@ class UserBooksController extends Controller
     /**
      * @throws ErrorException
      */
-    public function makeFavorite(Request $request, $bookId)
+    public function makeFavorite(Request $request, int $bookId)
     {
         if (false === $this->checkUserHasBook($request, $bookId)) {
             return new JsonResponse(["message" => "книга не принадлежит пользователю"]);
@@ -60,7 +67,7 @@ class UserBooksController extends Controller
     /**
      * @throws ErrorException
      */
-    public function getInfo(Request $request, $bookId)
+    public function getInfo(Request $request, int $bookId)
     {
         if (false === $this->checkUserHasBook($request, $bookId)) {
             return new JsonResponse(["message" => "книга не принадлежит пользователю"]);
@@ -76,10 +83,9 @@ class UserBooksController extends Controller
     /**
      * @throws ErrorException
      */
-    private function checkUserHasBook(Request $request, $bookId)
+    private function checkUserHasBook(Request $request, int $bookId)
     {
         $user = $this->getUserByToken($request);
-
         $bookExistence = DB::table('user_books')
             ->where('book_id', $bookId)
             ->where('user_id', $user->id)
@@ -87,10 +93,13 @@ class UserBooksController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
+     */
     private function getUserByToken(Request $request)
     {
         $token = $request->bearerToken();
-
         $user = DB::table("users")
             ->where("remember_token", "=", $token)->first();
 
